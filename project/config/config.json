@@ -1,0 +1,257 @@
+{
+    "training_mode": "research",
+    "agent_operational_mode": "dynamic_target",
+    "mass_range_training": [20000, 70000],
+    "wheel_radius_range_training": [0.45, 0.55],
+    "frontal_area_range_training": [9.0, 11.0],
+    "final_drive_ratio": 3.42,
+    "num_track_generation_workers": 28,
+    "seed": 42,
+    "diagnostic_frequency": 5,
+    "device": "cuda",
+    "n_samples": 10000,
+    "n_samples_for_stats": 2500,
+    "neg_torque_pen" : 8.0,
+    "base_batch_for_lr": 384,
+    "accum_steps": 1,
+    "track_length": 1000,
+    "past_context_steps": 10,
+    "future_horizon_steps": 60,
+    "window_stride": 30,
+    "batch_size": 256,
+    "epochs": 200,
+    "d_model": 256,
+    "nhead": 4,
+    "num_encoder_layers": 3,
+    "num_decoder_layers": 2,
+    "model_architecture": "parallel",
+    "num_model_features": 9,
+    "dropout": 0.2,
+    "num_gears": 15,
+    "lr": 0.0005,
+    "max_patience": 10,
+    "scheduler_patience": 5,
+    "use_amp": true,
+    "use_torch_compile": true,
+    "gradient_clip_value": 1.0,
+    "dt": 1.0,
+    "substeps": 5,
+    "max_speed": 30.0,
+    "rpm_max_sim": 3500.0,
+
+    "one_cycle_lr_params": {
+    "max_lr_override_factor": 1.0,
+    "pct_start": 0.3,
+    "anneal_strategy": "cos",
+    "div_factor": 25.0,
+    "final_div_factor": 10000.0},
+
+    "vehicle_physical_params": {
+        "max_pos_tq": 2600.0,
+        "max_friction_brake_force": 150000.0,
+        "gear_ratios": [32.0, 19.0, 14.941, 11.729, 9.036, 7.094, 5.538, 4.348, 3.436, 2.698, 2.078, 1.632, 1.274, 1.0, 0.78],
+        "gear_neg_limits": [-200.0, -300.0, -300.0, -400.0, -500.0, -600.0, -600.0, -700.0, -700.0, -800.0, -900.0, -900.0, -1000.0, -1100.0, -1200.0],
+        "rpm_min": 600.0,
+        "rpm_max": 3500.0
+    },
+
+    "loss_function_params": {
+        "speed_weight": 15.0,
+        "energy_weight": 0.15,
+        "efficiency_penalty_weight": 10.0,
+        "brake_energy_penalty_weight": 2.0,
+        "brake_smoothness_weight": 2.0,
+        "torque_smoothness_weight": 0.5,
+        "gear_shift_regularization_weight": 5.0,
+        "gamma_rpm": 25.0,
+        "stall_penalty_weight": 150.0,
+        "speed_loss_n_terminal": 20,
+        "speed_loss_delta_terminal": 0.2,
+        "speed_loss_weight_start": 0.2,
+        "speed_loss_weight_end": 1.0,
+        "gear_entropy_weight": 1.0
+    },
+
+    "training_params": {
+        "tau_start": 5.0,
+        "tau_end": 0.5,
+        "tau_decay_rate": 0.992,
+        "hard_gumbel_start_epoch_fraction": 0.3,
+        "s_params_warmup_epochs": 3,
+        "logit_noise_level": 0.1,
+        "num_dataloader_workers": 4,
+        "dataloader_drop_last": true
+    },
+    
+    "dwa_params": {
+        "temperature": 2.0
+    },
+
+    "pid_params": {
+        "pid_scalar_kp": 1000.0,
+        "pid_scalar_ki": 50.0,
+        "pid_scalar_kd": 100.0
+    },
+
+    "mpc_params": {
+        "optim_steps": 50,
+        "w_energy": 1.0,
+        "w_rmse": 1.0,
+        "w_rpm_hinge": 30.0,
+        "w_torque_smooth": 0.5,
+        "w_brake_effort": 2.0,
+        "w_action_reg": 0.01,
+        "optim_lr": 1.0
+    },
+
+    "dp_oracle_params": {
+        "v_min_mps": 2.0,
+        "v_max_mps": 30.0,
+        "v_step_mps": 0.5,
+        "torque_steps": 21,
+        "w_energy": 1.0,
+        "w_speed": 1.0,
+        "w_shift": 5.0,
+        "w_terminal": 100.0
+    },
+
+    "piml_specific_params": {
+        "target_efficiency_threshold": 0.30,
+        "lugging_rpm_threshold": 950.0,
+        "lugging_torque_threshold_fraction": 0.40,
+        "use_gear_plausibility_penalty": true,
+        "gear_plausibility_weight": 0.25,
+        "gear_plausibility_speed_breaks": [
+            2.0, 3.5, 5.0, 6.5, 8.0, 9.5, 11.0, 13.0, 
+            15.0, 17.0, 20.0, 23.0, 26.0, 30.0
+        ]
+    },
+
+    "engine_params": {
+        "peak_efficiency_value": 0.45,
+        "min_operational_efficiency": 0.15,
+        "absolute_min_floor_eff": 0.10,
+        "efficient_rpm_center": 1200.0,
+        "efficient_torque_center": 2200.0,
+        "rpm_stddev_sweet_spot": 250.0,
+        "torque_stddev_sweet_spot": 600.0,
+        "very_low_load_eff_value": 0.15,
+        "low_load_torque_center_fraction": 0.05,
+        "low_load_steepness_factor": 0.02,
+        "lugging_target_efficiency": 0.18,
+        "idle_fuel_power_kw": 5.0
+    },
+    
+    "paths": {
+        "base_project_dir": "/home/bruno/Documents/light-of-aman/Thesis/Python/project",
+        "config_dir": "config",
+        "checkpoints_dir": "checkpoints",
+        "plots_dir": "plots",
+        "feature_mins_filename": "feature_mins.pt",
+        "feature_maxs_filename": "feature_maxs.pt",
+        "cache_dir": "cache/dp_oracle"
+    },
+
+    "data_generation_params": {
+        "avg_total_gear_ratio_base_energy": 12.0,
+        "avg_engine_efficiency_base_energy": 0.35,
+        "segment_length_mean": 10,
+        "segment_length_std": 2,
+        "base_slope_distribution": "mostly_flat",
+        "slope_change_std": 0.1,
+        "max_slope_deg": 2.0,
+        "init_speed_range": [3.0, 15.0],
+        "stop_go_prob": 0.0,
+        "stop_duration_range_s": [2, 5],
+        "forced_downhill_prob": 0.0,
+        "forced_downhill_deg_range": [-5.0, -2.0]
+    },
+
+    "evaluation_rhc_params": {
+        "rhc_eval_debug_level": 1,
+        "rhc_eval_num_tracks": 10,
+        "rhc_eval_track_len": 70
+    },
+
+    "curriculum_stages": [
+        {
+            "stage_name": "Stage 0.0: Basic Physics Warm-up",
+            "epochs_in_stage": 30,
+            "n_samples_per_stage": 1000,
+            "data_gen_params_override": { "max_slope_deg": 1.0, "track_length": 600, "init_speed_range": [8.0, 12.0] },
+            "mass_range_training": [20000, 30000], 
+            "loss_function_params_override": { "gear_shift_regularization_weight": 1.0, "efficiency_penalty_weight": 1.0 }
+        },
+        {
+            "stage_name": "Stage 0.5: Cold Start",
+            "epochs_in_stage": 40,
+            "n_samples_per_stage": 1000,
+            "data_gen_params_override": { "max_slope_deg": 2.0, "track_length": 600, "init_speed_range": [1.0, 4.0] },
+            "mass_range_training": [20000, 40000]
+        },
+        {
+            "stage_name": "Stage 1: Gentle Introduction",
+            "epochs_in_stage": 50,
+            "n_samples_per_stage": 1000,
+            "data_gen_params_override": { "max_slope_deg": 2.5, "track_length": 700, "init_speed_range": [5.0, 15.0] },
+            "mass_range_training": [20000, 50000],
+            "loss_function_params_override": {
+                "gear_shift_regularization_weight": 8.0,
+                "efficiency_penalty_weight": 5.0,
+                "speed_weight" : 15.0 
+            }
+        },
+        {
+            "stage_name": "Stage 2: Stop, Go, and Hills",
+            "epochs_in_stage": 50,
+            "n_samples_per_stage": 1200,
+            "data_gen_params_override": { "max_slope_deg": 6.0, "base_slope_distribution": "mixed", "track_length": 800, "stop_go_prob": 0.15, "forced_downhill_prob": 0.10 },
+            "mass_range_training": [20000, 70000],
+            "loss_function_params_override": {
+                "gear_shift_regularization_weight": 15.0,
+                "efficiency_penalty_weight": 7.0,
+                "speed_weight" : 15.0
+            }
+        },
+        {
+            "stage_name": "Stage 2.5: Hill Start BOOTCAMP",
+            "epochs_in_stage": 30,
+            "n_samples_per_stage": 500,
+            "data_gen_params_override": { "track_length": 300, "init_speed_range": [0.0, 0.5], "stop_go_prob": 1.0, "max_slope_deg": 4.0 },
+            "mass_range_training": [40000, 70000],
+            "loss_function_params_override": { "stall_penalty_weight": 500.0 }
+        },
+        {
+            "stage_name": "Stage 3: Full Complexity",
+            "epochs_in_stage": 100,
+            "n_samples_per_stage": 3000,
+            "data_gen_params_override": { "max_slope_deg": 6.0, "base_slope_distribution": "mixed", "track_length": 1000, "stop_go_prob": 0.10, "forced_downhill_prob": 0.10 },
+            "mass_range_training": [20000, 70000],
+            "loss_function_params_override": {
+                "efficiency_penalty_weight": 25.0,
+                "energy_weight": 0.10,
+                "speed_weight": 20.0
+            }
+        },
+    {
+        "stage_name": "Stage 4: Predictive Planner Fine-tuning",
+        "epochs_in_stage": 50,
+        "n_samples_per_stage": 3000,
+        "data_gen_params_override": { 
+            "max_slope_deg": 7.0, 
+            "base_slope_distribution": "mixed", 
+            "track_length": 1200, 
+            "stop_go_prob": 0.15, 
+            "forced_downhill_prob": 0.15 
+        },
+        "mass_range_training": [20000, 70000],
+        "loss_function_params_override": {
+            "speed_weight": 30.0,
+            "energy_weight": 0.025,
+            "efficiency_penalty_weight": 5.0,
+            "gear_shift_regularization_weight": 10.0,
+            "gear_entropy_weight": 0.2
+        }
+    }
+    ]
+}
